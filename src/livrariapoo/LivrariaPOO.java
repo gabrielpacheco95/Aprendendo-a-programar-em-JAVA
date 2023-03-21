@@ -65,10 +65,10 @@ public class LivrariaPOO {
         System.out.println("2 - Editar" + tpCad);
         System.out.println("3 - Listar" + tpCad + "s");
         System.out.println(cadCliente.getClientes().toString());
-        for(Cliente cli: cadCliente.getClientes()){
-            System.out.println("CPF: \t"+cli.getCpf());
+        for (Cliente cli : cadCliente.getClientes()) {
+            System.out.println("CPF: \t" + cli.getCpf());
             System.out.println("Nome: \t" + cli.getNomeCliente());
-            System.out.println("Fone: \t" +cli.getTelefone());
+            System.out.println("Fone: \t" + cli.getTelefone());
         }
         System.out.println("4 - Deletar" + tpCad);
         deletarCliente();
@@ -125,12 +125,12 @@ public class LivrariaPOO {
         String cpf = leia.next();
         if (Validadores.isCPF(cpf)) {
             Cliente cli = cadCliente.getClienteCPF(cpf);
-            if (cli != null){
-            cadCliente.removeCliente(cli);
+            if (cli != null) {
+                cadCliente.removeCliente(cli);
                 System.out.println("Cliente deletado com sucesso!");
-            }else{
+            } else {
                 System.out.println("Cliente não consta na base de dados!");
-                              }
+            }
         } else {
             System.out.println("CPF INVÀLIDO!");
 
@@ -169,6 +169,7 @@ public class LivrariaPOO {
                                 cadastrarCliente();
                             case 2:
                                 System.out.println("-- Editar --");
+                                editarCliente();
 
                             case 3:
                                 System.out.println("-- Listar --");
@@ -193,5 +194,58 @@ public class LivrariaPOO {
 
         } while (opM != 0); //Sistema
 
+    }
+
+    private static void editarCliente() {
+        System.out.println("Editar Cliente");
+        System.out.println("Informe o CPF: ");
+        String cpf = leia.nextLine();
+        if (Validadores.isCPF(cpf)) {
+            Cliente cli = cadCliente.getClienteCPF(cpf);
+            if (cli != null) {
+                System.out.println("1 - Nome: " + cli.getNomeCliente());
+                System.out.println("2 - Nome: " + cli.getEndereco());
+                System.out.println("3 - Nome: " + cli.getTelefone());
+                System.out.println("4 - Todos os campos acima");
+                System.out.print("Qual campo deseja alterar?" + "\nDigite Aqui: ");
+
+                int opEditar = leiaNumInt();
+                switch (opEditar) {
+                    case 1:
+                        System.out.print("Informe o Nome: ");
+                        cli.setNomeCliente(leia.nextLine());
+                        break;
+                    case 2:
+                        System.out.print("Informe o Endereco: ");
+                        cli.setEndereco(leia.nextLine());
+                        break;
+                    case 3:
+                        System.out.println("Informe o telefone:");
+                        cli.setTelefone(leia.nextLine());
+                        break;
+                    case 4:
+                        System.out.println("Informe todos os campos abaixo: ");
+                          System.out.print("Informe o Nome: ");
+                        cli.setNomeCliente(leia.nextLine());
+                        
+                            System.out.print("Informe o Endereco: ");
+                        cli.setEndereco(leia.nextLine());
+                        
+                        System.out.println("Informe o telefone:");
+                        cli.setTelefone(leia.nextLine());
+                        break;
+                        
+                    default:
+                        System.out.println("Opção Inválida!");
+                        break;
+                }
+                System.out.println("Cliente: \n" +cli.toString());
+
+            } else {
+                System.out.println("Cliente não cadastrado!");
+            }
+        } else {
+            System.out.println("CPF inválido");
+        }
     }
 }
