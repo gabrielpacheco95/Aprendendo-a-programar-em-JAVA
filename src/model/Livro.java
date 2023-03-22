@@ -22,6 +22,10 @@ public class Livro {
     public Livro() {
     }
 
+    public Livro(int idLivro, String titulo, String autor, String assunto, String bn, int estoque, float preco, Editora idEditora) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public int getIdLivro() {
         return idLivro;
     }

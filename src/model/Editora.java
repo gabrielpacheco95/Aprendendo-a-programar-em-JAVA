@@ -20,6 +20,17 @@ public class Editora {
     public Editora() {
     }
 
+    public Editora(int idEditora, String nmEditora, String cnpj, String endereco, String telefone, String gerente) {
+        this.idEditora = idEditora;
+        this.nmEditora = nmEditora;
+        this.cnpj = cnpj;
+        this.endereco = endereco;
+        this.telefone = telefone;
+        this.gerente = gerente;
+    }
+    
+    
+
     public int getIdEditora() {
         return idEditora;
     }
@@ -73,18 +84,6 @@ public class Editora {
         return "Editora{" + "idEditora=" + idEditora + ", nmEditora=" + nmEditora + ", cnpj=" + cnpj + ", endereco=" + endereco + ", telefone=" + telefone + ", gerente=" + gerente + '}';
     }
 
-    public void setNomeEditora(String juvenal_das_Candongas) {
-        
-    }
-
-    public void setCpf(String string) {
-     
-    }
-
-    public void getcnpj() {
-        
-     
-    }
     
     
 }
