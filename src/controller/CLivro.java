@@ -66,6 +66,19 @@ public class CLivro {
         return l;
     }
 
+    public boolean atualizaEstoqueLivro(String isbn) {
+        for (Livro livro : livros) {
+            if (livro.getIsbn().equals(isbn)) {
+                if (livro.getEstoque()>0) {
+                    livro.setEstoque(livro.getEstoque()-1);
+                    return true;
+                }
+                break;
+            }
+        }
+        return false;
+    }
+
 }// fim da classe controller
 
 

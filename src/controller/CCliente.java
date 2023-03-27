@@ -61,7 +61,7 @@ public class CCliente {
         Cliente c1 = new Cliente();
         c1.setIdCliente(this.geraID());
         c1.setNomeCliente("Juvenal das Candongas");
-        c1.setCpf("12387945836");
+        c1.setCpf("17856974044");
         c1.setEndereco("Rua das Oliveiras");
         c1.setTelefone("51782547891");
         this.addCliente(c1);
@@ -69,7 +69,7 @@ public class CCliente {
         Cliente c2 = new Cliente();
         c2.setIdCliente(this.geraID());
         c2.setNomeCliente("joaquin");
-        c2.setCpf("87423684959");
+        c2.setCpf("96215567086");
         c2.setEndereco("Rua das margaridas");
         c2.setTelefone("51987365478");
         this.addCliente(c2);

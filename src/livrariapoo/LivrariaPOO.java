@@ -9,11 +9,16 @@ import controller.CCliente;
 import controller.CEditora;
 import controller.CLivro;
 import controller.CVendaLivro;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Scanner;
 import model.Cliente;
 import model.Editora;
 import model.Livro;
+import model.VendaLivro;
 import util.Validadores;
+
+
 
 /**
  *
@@ -207,7 +212,9 @@ public class LivrariaPOO {
                         }
                     } while (opSM != 0); //fim subMenu
                     break;
-
+                case 4:
+                    vendaLivro();
+                    break;
                 default:
                     System.out.println("Opção Inválida!");
             }
@@ -450,7 +457,43 @@ public class LivrariaPOO {
     }
 
     private static void editarLivro() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("-- Editar Livro --");
+        System.out.print("Informe o ISBN: ");
+        String isbn = leia.nextLine();
+        Livro li = cadLivro.getLivroISBN(isbn);
+        if (li != null) {
+            System.out.println("Livro selecionado: " + li.getTítulo());
+            System.out.println("O que deseja alterar:");
+            System.out.println("1 - Titulo");
+            System.out.println("2 - Estoque");
+            System.out.println("3 - Preço");
+            System.out.println("4 - Todos acima");
+            System.out.println("0 - Cancelar");
+            System.out.print("Digite aqui: ");
+            int op = leiaNumInt();
+            if (op == 1 || op == 4) {
+                System.out.println("Titulo atual:\t" + li.getTítulo());
+                System.out.print("Informe novo titulo: ");
+                li.setTítulo(leia.nextLine());
+            }
+            if (op == 2 || op == 4) {
+                System.out.println("Estoque atual:\t" + li.getEstoque());
+                System.out.print("Informe novo estoque: ");
+                li.setEstoque(leiaNumInt());
+            }
+            if (op == 3 || op == 4) {
+                System.out.println("Preço atual:\t" + li.getPreco());
+                System.out.print("Informe novo preço: ");
+                li.setPreco(leiaNumFloat());
+            }
+            if (op == 0) {
+                System.out.println("Operação cancelada pelo usuário!");
+            }
+            System.out.println("Livro Editado:");
+            System.out.println(li.toString());
+        } else {
+            System.out.println("ISBN inválido!");
+        }
     }
 
     private static void listarLivro() {
@@ -470,11 +513,61 @@ public class LivrariaPOO {
         String isbn = leia.nextLine();
         Livro li = cadLivro.getLivroISBN(isbn);
         if (li != null) {
-            System.out.println("Livro" + li.getTítulo()+ "Será deletado!");
+            System.out.println("Livro" + li.getTítulo() + "Será deletado!");
             cadLivro.removeLivro(li);
         } else {
             System.out.println("ISBN não encontrado!");
         }
+    }
+
+    private static void vendaLivro() {
+        int idVendaLivro;
+        Cliente idCliente = null;
+        ArrayList<Livro> livros = new ArrayList<>();
+        float subTotal = 0;
+        LocalDate dataVenda = LocalDate.now();
+
+        do {
+            System.out.print("Informe o CPF do Cliente: ");
+            String CPF = leia.nextLine();
+            if (Validadores.isCPF(CPF)) {
+                idCliente = cadCliente.getClienteCPF(CPF);
+                if (idCliente == null) {
+                    System.out.println("Cliente não cadastrado!");
+                }
+            } else {
+                System.out.println("CPF INVÀLIDO");
+            }
+        } while (idCliente == null);
+
+        boolean venda = true;
+
+        do {
+            Livro li = null;
+            String Isbn;
+
+            do {
+                System.out.print("Informe o ISBN:");
+                Isbn = leia.nextLine();
+                li = cadLivro.getLivroISBN(Isbn);
+                if (li == null);
+                System.out.println("Livro não encontrado, tente novamente");
+
+                livros.add(li);
+                cadLivro.atualizaEstoqueLivro(li.getIsbn());
+                subTotal += li.getPreco();
+                System.out.println("Deseja comprar mais livros?"
+                        + "\n1 - Sim | 2- Não"
+                        + "\n Digite: ");
+                if (leiaNumInt() == 2) {
+                    venda = false;
+                }
+            } while (li == null);
+            idVendaLivro = cadVendaLivro.geraID();
+            VendaLivro vl = new VendaLivro(idVendaLivro, idCliente, livros, subTotal, dataVenda);
+            cadVendaLivro.addVendaLivro(vl);
+            System.out.println(" -- VENDA -- " + vl.toString());
+        } while (venda);
     }
 
 }
